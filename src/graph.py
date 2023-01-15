@@ -1,6 +1,7 @@
 import networkx as nx
-from handlers import read_csv
 import matplotlib.pyplot as plt
+
+from handlers import read_csv
 
 
 class Graph:
