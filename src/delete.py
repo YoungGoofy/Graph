@@ -7,7 +7,8 @@ def del_node():
     v = "".join(s)
     u = v.split()
     for i in u:
-        print(i)
+        print("Файл: ", i)
+    print('Введите команду "DELETE NODE <filename>"')
     k3 = [str(i) for i in input().split()]
     if "DEL" in k3 and "NODE" in k3 and len(k3) == 3 and k3[2] in u:
         # конвертация графа в таблицу

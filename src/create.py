@@ -3,6 +3,7 @@ from graph import Graph
 
 
 def create_node():
+    print('Введите команду "CREATE NODE <filename>"')
     k1 = [str(i) for i in input().split()]
     if "CREATE" in k1 and "NODE" in k1 and len(k1) == 3:
         df = pd.DataFrame({})

@@ -7,7 +7,8 @@ def update_node():
     v = "".join(s)
     u = v.split()
     for i in u:
-        print(i)
+        print("Файл: ", i)
+    print('Введите команду "UPDATE NODE <filename>"')
     k4 = [str(i) for i in input().split()]
     if "UPDATE" in k4 and "NODE" in k4 and len(k4) == 3 and k4[2] in u:
         # конвертация графа в таблицу

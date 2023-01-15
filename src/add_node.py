@@ -7,7 +7,8 @@ def add_node():
     v = "".join(s)
     u = v.split()
     for i in u:
-        print(i)
+        print("Файл: ", i)
+    print('Введите команду "ADD NODE <filename>"')
     k2 = [str(i) for i in input().split()]
     if "ADD" in k2 and "NODE" in k2 and len(k2) == 3 and k2[2] in u:
         # конвертация графа в таблицу
