@@ -38,8 +38,11 @@ class Graph:
             for item, value in data.items():
                 self.G.add_edge(item, value)
 
+    def add_node(self):
+        self.G.add_node(self.filename)
+
     def draw_graph(self):
         self.add_nodes_from_table()
         self.add_edges_from_table()
         nx.draw(self.G, with_labels=True)
-        plt.savefig(f"{os.path.basename('test.csv').split('.')[0]}.png")
+        plt.savefig(f"{self.filename}.png")
