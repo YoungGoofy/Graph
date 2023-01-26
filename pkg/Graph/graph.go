@@ -89,6 +89,20 @@ func (g *Graph) ClearAll() {
 	g.Edges = []Edge{}
 }
 
+func (g Graph) Neighbors(node Node) Nodes {
+	var neighborsList Nodes
+	for _, edge := range g.Edges {
+		if edge[0] == node {
+			neighborsList = append(neighborsList, edge[1])
+		}
+	}
+	return neighborsList
+}
+
+func (g Graph) Degree(node Node) int {
+	return len(g.Neighbors(node))
+}
+
 func (g Graph) findNodes(node1, node2 Node) bool {
 	var count int
 	for _, item := range g.Nodes {
