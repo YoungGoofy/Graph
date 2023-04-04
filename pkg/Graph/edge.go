@@ -6,15 +6,14 @@ import (
 )
 
 type edge struct {
-	start string
-	end   string
+	StartID, EndID int
 }
 
-func newEdge(start, end string) edge {
-	return edge{start: start, end: end}
+func newEdge(start, end int) edge {
+	return edge{StartID: start, EndID: end}
 }
 
-func (g *Graph) AddEdge(start, end string) error {
+func (g *Graph) AddEdge(start, end int) error {
 	if g.findNodes(start, end) {
 		e := newEdge(start, end)
 		if g.checkEdgeDuplicates(e) {
@@ -31,8 +30,8 @@ func (g *Graph) AddEdge(start, end string) error {
 func (g *Graph) AddEdges(edges ...Edge) []error {
 	err := []error{}
 	for index, edge := range edges {
-		if g.findNodes(edge.Start, edge.End) {
-			e := newEdge(edge.Start, edge.End)
+		if g.findNodes(edge.StartID, edge.EndID) {
+			e := newEdge(edge.StartID, edge.EndID)
 			if g.checkEdgeDuplicates(e) {
 				g.edges = append(g.edges, e)
 			} else {
@@ -50,7 +49,7 @@ func (g *Graph) AddEdges(edges ...Edge) []error {
 
 func (g *Graph) DeleteEdge(edge Edge) error {
 	for i := 0; i < len(g.edges); i++ {
-		if g.edges[i].start == edge.Start && g.edges[i].end == edge.End {
+		if g.edges[i].StartID == edge.StartID && g.edges[i].EndID == edge.EndID {
 			g.edges = append(g.edges[i:], g.edges[i+1:]...)
 			return nil
 		}
@@ -60,7 +59,7 @@ func (g *Graph) DeleteEdge(edge Edge) error {
 
 func (g Graph) PrintEdges() {
 	for index, edge := range g.edges {
-		fmt.Printf("Узел %d = [%s %s]\n", index, edge.start, edge.end)
+		fmt.Printf("Узел %d = id[%d] -> id[%d]\n", index, edge.StartID, edge.EndID)
 	}
 }
 
@@ -73,14 +72,14 @@ func (g Graph) checkEdgeDuplicates(edge edge) bool {
 	return true
 }
 
-func (g Graph) findNodes(node1, node2 string) bool {
+func (g Graph) findNodes(node1, node2 int) bool {
 	var count int
 	if node1 == node2 {
 		log.Println("Нельзя объединить одну и ту же ноду")
 		return false
 	}
 	for _, item := range g.nodes {
-		if item.Name == node1 || item.Name == node2 {
+		if item.ID == node1 || item.ID == node2 {
 			count++
 		}
 	}
@@ -88,6 +87,5 @@ func (g Graph) findNodes(node1, node2 string) bool {
 }
 
 type Edge struct {
-	Start string
-	End   string
+	StartID, EndID int
 }

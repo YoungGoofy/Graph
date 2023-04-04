@@ -5,30 +5,39 @@ import (
 )
 
 type node struct {
-	Name string
-	X, Y int
+	ID    int
+	Name  string
+	X, Y  int
+	Edges []edge
 }
 
-func newNode(name string) node {
-	return node{Name: name}
+type Node struct {
+	ID    int
+	Name  string
+	X, Y  int
+	Edges []edge
 }
 
-func (g *Graph) AddNode(name string) error {
+func newNode(id int, name string) node {
+	return node{Name: name, ID: id}
+}
+
+func (g *Graph) AddNode(id int, name string) error {
 	if g.checkNodeDuplicates(name) {
-		g.nodes = append(g.nodes, newNode(name))
+		g.nodes = append(g.nodes, newNode(id, name))
 	} else {
 		return fmt.Errorf("error: нода %s уже существует", name)
 	}
 	return nil
 }
 
-func (g *Graph) AddNodes(names ...string) []error {
+func (g *Graph) AddNodes(nodes ...Node) []error {
 	err := []error{}
-	for _, name := range names {
-		if g.checkNodeDuplicates(name) {
-			g.nodes = append(g.nodes, newNode(name))
+	for _, node := range nodes {
+		if g.checkNodeDuplicates(node.Name) {
+			g.nodes = append(g.nodes, newNode(node.ID, node.Name))
 		} else {
-			err = append(err, fmt.Errorf("error: нода %s уже существует", name))
+			err = append(err, fmt.Errorf("error: нода %s уже существует", node.Name))
 		}
 	}
 	if len(err) != 0 {
@@ -37,9 +46,9 @@ func (g *Graph) AddNodes(names ...string) []error {
 	return nil
 }
 
-func (g *Graph) DeleteNode(name string) error {
+func (g *Graph) DeleteNode(id int) error {
 	for i := 0; i < len(g.nodes); i++ {
-		if g.nodes[i].Name == name {
+		if g.nodes[i].ID == id {
 			g.nodes = append(g.nodes[:i], g.nodes[i+1:]...)
 			return nil
 		}
