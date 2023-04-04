@@ -29,7 +29,7 @@ func (g *Graph) DrawGraph() *image.RGBA {
 	maxNode := findMaxEdgesNode(g.nodes)
 
 	// Set canvas size
-	size := int(math.Sqrt(float64(len(g.nodes)))) * 100
+	size := int(math.Sqrt(float64(len(g.nodes)))) * 1500
 	canvas := image.NewRGBA(image.Rect(0, 0, size, size))
 	draw.Draw(canvas, canvas.Bounds(), &image.Uniform{color.White}, image.Point{}, draw.Src)
 
@@ -54,8 +54,8 @@ func (g *Graph) DrawGraph() *image.RGBA {
 
 	// Draw nodes
 	for _, node := range g.nodes {
-		drawCircle(canvas, node.X, node.Y, 20)
-		drawCircle(canvas, node.X, node.Y, 18)
+		drawCircle(canvas, node.X, node.Y, 40)
+		drawCircle(canvas, node.X, node.Y, 36)
 		drawText(canvas, &node)
 	}
 
@@ -78,8 +78,8 @@ func findMaxEdgesNode(nodes []node) node {
 
 func drawLine(img *image.RGBA, x0, y0, x1, y1 int) {
 	clr := color.RGBA{R: 0, G: 0, B: 0, A: 255}
-	dx := math.Abs(float64(x1 - x0))
-	dy := -math.Abs(float64(y1 - y0))
+	dx := abs(x1 - x0)
+	dy := -abs(y1 - y0)
 	sx := 1
 	sy := 1
 	if x0 > x1 {
@@ -129,4 +129,11 @@ func drawText(img *image.RGBA, node *node) {
 		Dot:  point,
 	}
 	d.DrawString(node.Name)
+}
+
+func abs(x int) int {
+	if x < 0 {
+		return -x
+	}
+	return x
 }
